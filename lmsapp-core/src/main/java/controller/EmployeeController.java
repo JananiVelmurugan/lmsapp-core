@@ -4,6 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import model.Employee;
@@ -16,34 +20,39 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService employeeService;
 
-	
 	public void createEmployee(Employee emp) {
 		employeeService.addEmployee(emp);
 	}
 
-	public Employee getById(Long empId) {
+	@GetMapping("/employee/{id}")
+	public Employee searchById(@PathVariable("id") Long empId) {
 		return employeeService.findById(empId);
 	}
 
-	public Employee searchByEmailId(String emailId) {
+	@GetMapping("/employee/{email}")
+	public Employee searchByEmailId(@PathVariable("email") String emailId) {
 
 		return employeeService.findByEmailId(emailId);
 	}
 
-	public void activate(Long empId) {
+	@PutMapping("/employee/{id}")
+	public void activate(@PathVariable("id") Long empId) {
 		employeeService.activate(empId);
 	}
 
-	public void deActivate(Long empId) {
+	@PutMapping("/employee/{id}")
+	public void deActivate(@PathVariable("id") Long empId) {
 
 		employeeService.deActivate(empId);
 	}
 
-	public void remove(Long empId) {
+	@DeleteMapping("/employee/{id}")
+	public void remove(@PathVariable("id") Long empId) {
 
 		employeeService.delete(empId);
 	}
 
+	@GetMapping("/employee")
 	public List<Employee> selectAll() {
 
 		return employeeService.list();
